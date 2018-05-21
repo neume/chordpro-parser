@@ -3,6 +3,11 @@ An attempt to rewrite chordproko gem in C++. It should be portable to any device
 
 This program outputs XML or YML files.
 
-# Ruby Gem
+## Ruby Gem
 A wrapper ruby gem will follow after a working prototype or release candidate is published and soon will be utilized in an existing
 `chordproko` gem.
+
+## TODOs
++ Analyzer
++ Parser
++ Tests
