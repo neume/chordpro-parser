@@ -7,6 +7,11 @@ This program outputs XML or YML files.
 A wrapper ruby gem will follow after a working prototype or release candidate is published and soon will be utilized in an existing
 `chordproko` gem.
 
+## Setup
+There's nothing in it yet. Run this command to try it out.
+```sh
+make build-and-run
+```
 ## TODOs
 + Analyzer
 + Parser
