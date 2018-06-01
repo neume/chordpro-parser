@@ -2,7 +2,8 @@
 #include <fstream>
 using namespace std;
 const int NIL = 20;
-int get_category(char c);
+int get_category(char);
+string get_state_token(int);
 int main() {
   int delta[10][10] = {
     /*          0    1    2    3    4    5    6    7    8    9 */
@@ -44,7 +45,8 @@ int main() {
       // cout << "breaked!";
       break;
     }
-    cout << lexeme << endl;
+    string token = get_state_token(state);
+    cout << "[" << token << "]" << lexeme << endl;
     in.putback(character);
   }
 
@@ -68,4 +70,12 @@ int get_category(char ch) {
     default: cout << "Something here: (" << ch << ")" << endl;
   };
   return -1;
+}
+string get_state_token(int state) {
+  switch(state) {
+    case 101: return "Chord";
+    case 102: return "Dir  ";
+    case 103: return "Lyric";
+    default: return "Other";
+  }
 }
