@@ -41,12 +41,13 @@ int main() {
       if(state > 100) break;
       lexeme += character;
     }
+    string token = get_state_token(state);
+    if(token != "Newln" and token != "EOF   ")
+      cout << "[" << token << "]:   " << lexeme << endl;
     if(eof) {
       // cout << "breaked!";
       break;
     }
-    string token = get_state_token(state);
-    cout << "[" << token << "]" << lexeme << endl;
     in.putback(character);
   }
 
@@ -76,6 +77,8 @@ string get_state_token(int state) {
     case 101: return "Chord";
     case 102: return "Dir  ";
     case 103: return "Lyric";
-    default: return "Other";
+    case 104: return "EOF  ";
+    case 105: return "Newln";
+    default:  return "Other";
   }
 }
