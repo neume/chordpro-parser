@@ -1,7 +1,7 @@
 #include <iostream>
-#include "scan"
+#include "scan.cpp"
 using namespace std;
 int main() {
-  Scan scanner = new Scan();
+  Scan scanner = Scan();
   scanner.print();
 }

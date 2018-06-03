@@ -1,7 +1,8 @@
 install:
-	g++ scan.cpp -o scan
+	g++ main.cpp -o a.out
+	chmod +x a.out
 run:
-	./scan
+	./a.out
 clean:
-	rm scan
+	rm a.out
 build-and-run: install run
