@@ -3,50 +3,40 @@
 #include <sstream>
 #include <vector>
 #include "dfa_matrix.cpp"
+#include "token.cpp"
+#include "enums.h"
 using namespace std;
 
 class Scan {
   static const int NIL = -1;
   DFAMatrix delta;
+  ifstream *in;
+  int accepting_states;
+
 public:
+
   Scan() {
     delta = DFAMatrix("dfa_chordpro");
+    in = new ifstream("../sample.chordpro");
+    accepting_states = 100;
   }
-  int process() {
-    ifstream in;
-    in.open("../sample.chordpro");
-    bool eof = false;
-    int ctr = 0;
+
+  Token scan() {
+    string lexeme = "";
     char character;
+    int state = 0;
+    bool eof = false;
     while(true) {
-      string lexeme = "";
-      int character, state = 0;
-      while(true) {
-        character = in.get();
-        int category = get_category(character);
-        // cout << int(category)  <<":" << character << ":" << ctr << endl;
-        state = delta[state][category];
-        if(character == '\n' )
-        ; // cout << "newline";
-        if(state == 0) break;
-        if(state == 104) eof = true;
-        if(state > 100) break;
-        lexeme += character;
-      }
-      string token = get_state_token(state);
-      if(token != "Newln" and token != "EOF   ")
-        cout << "[" << token << "]:   " << lexeme << endl;
-      if(eof) {
-        // cout << "breaked!";
-        break;
-      }
-      in.putback(character);
+      character = (*in).get();
+      int category = get_category(character);
+      state = delta[state][category];
+      // Accepting state
+      if(state > accepting_states) break;
+      lexeme += character;
     }
-
-    return 0;
+    (*in).putback(character);
+    return get_token(state, lexeme, 0, 0);
   }
-
-
 
   void print() {
     delta.print();
@@ -70,14 +60,14 @@ public:
     };
     return -1;
   }
-  string get_state_token(int state) {
-    switch(state) {
-      case 101: return "Chord";
-      case 102: return "Dir  ";
-      case 103: return "Lyric";
-      case 104: return "EOF  ";
-      case 105: return "Newln";
-      default:  return "Other";
+  Token get_token(int value, string lexeme, int row, int column) {
+    switch(value) {
+      case 101: return Token(CHORD, lexeme, row, column);
+      case 102: return Token(DIRECTIVE, lexeme, row, column);
+      case 103: return Token(LYRIC, lexeme, row, column);
+      case 104: return Token(EOF, lexeme, row, column);
+      case 105: return Token(NEWLINE, lexeme, row, column);
+      default:  return Token(OTHER, lexeme, row, column);
     }
   }
 };
