@@ -38,4 +38,7 @@ public:
       cout << endl;
     }
   }
+  vector <int> operator [](int index) {
+    return delta[index];
+  }
 };
