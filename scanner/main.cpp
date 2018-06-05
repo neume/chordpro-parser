@@ -3,5 +3,6 @@
 using namespace std;
 int main() {
   Scan scanner = Scan();
-  scanner.print();
+  // scanner.print();
+  scanner.process();
 }
