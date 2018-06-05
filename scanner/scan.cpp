@@ -10,7 +10,7 @@ class Scan {
   DFAMatrix delta;
 public:
   Scan() {
-    delta = DFAMatrix("dfa_table");
+    delta = DFAMatrix("dfa_chordpro");
   }
   void print() {
     delta.print();
