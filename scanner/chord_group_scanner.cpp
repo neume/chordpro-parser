@@ -49,12 +49,11 @@ public:
   int get_category(char ch) {
     if ( 'A' <= ch && ch <= 'G') return 0;
     // there is a collition with 1 but that's ok
+    if ( ch == 'b' or ch == '#')return 1;
     if ( 'a' <= ch && ch <= 'z') return 2;
     if ( 'A' <= ch && ch <= 'Z') return 2;
     if ( '0' <= ch && ch <= '9') return 4;
     switch (ch) {
-      case '#': return 1;
-      case 'b': return 1;
       case '[': return 5;
       case ']': return 6;
       case ' ': return 3;
@@ -70,9 +69,8 @@ public:
     switch(value) {
       case 200: return Token(NOTE, lexeme, row, column);
       case 201: return Token(QUALITY, lexeme, row, column);
-      case 202: return Token(ADDS, lexeme, row, column);
-      case 203: return Token(CDELIMETER, lexeme, row, column);
-
+      case 203: return Token(ADDS, lexeme, row, column);
+      case 202: return Token(CDELIMETER, lexeme, row, column);
       case 204: return Token(OBRACKET, lexeme, row, column);
       case 205: return Token(CBRACKET, lexeme, row, column);
       case 210: return Token(EOF, lexeme, row, column);
