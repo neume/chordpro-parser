@@ -14,5 +14,7 @@ enum {
   ADDS,
   NEWLINE,
   CDELIMETER,
+  ID,
+  SPACE,
   OTHER
 };
