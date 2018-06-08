@@ -16,8 +16,8 @@ class Scan {
 public:
 
   Scan() {
-    delta = DFAMatrix("dfa_chordpro");
-    in = new ifstream("../sample.chordpro");
+    delta = DFAMatrix("scanner/dfa_chordpro");
+    in = new ifstream("sample.chordpro");
     accepting_states = 100;
   }
 

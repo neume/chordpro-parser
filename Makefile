@@ -1,8 +1,8 @@
 install:
-	g++ main.cpp -o main
-	chmod +x main
+	g++ scanner/scan.cpp main.cpp
+	# chmod +x a.op
 run:
-	./main
+	./a.out
 clean:
-	rm main
+	rm a.out
 build-and-run: install run

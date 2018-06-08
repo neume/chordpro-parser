@@ -1,24 +1,25 @@
 #include <iostream>
-#include <fstream>
+#include "scanner/scan.cpp"
 using namespace std;
-const int NIL = -1;
-int get_category(char);
-string get_state_token(int);
+string get_token_string(int value) {
+  switch(value) {
+    case CHORD:       return "CHORD";
+    case LYRIC:       return "LYRIC";
+    case NEWLINE:     return "NEWLINE";
+    case DIRECTIVE:   return "DIRECTIVE";
+    case EOF:         return "EOF";
+    default:          return "DEFAULT";
+  }
+}
 int main() {
-  int delta[10][10] = {
-    /*          0    1    2    3    4    5    6    7    8    9 */
-    /*          s    a    0    {    }    [    ]    :  EOF   \n */
-    /*  0 */ {  6,   6,   6,   3,   6,   1,   6,   6, 104,   9},
-    /*  1 */ {  1,   1,   1,   1,   1,   1,   2,   1, 104, 105},
-    /*  2 */ {101, 101, 101, 101, 101, 101, 101, 101, 101, 101},
-    /*  3 */ {  3,   3,   3,   3,   3,   3,   3,   4, 104, 105},
-    /*  4 */ {  4,   4,   4,   4,   5,   4,   4,   4, 104, 105},
-    /*  5 */ {102, 102, 102, 102, 102, 102, 102, 102, 102, 102},
-    /*  6 */ {  6,   6,   6, 103,   6, 103,   6,   6, 103, 103},
-    /*  7 */ {NIL, NIL, NIL, NIL, NIL, NIL, NIL, NIL, 104, 105},
-    /*  8 */ {NIL, NIL, NIL, NIL, NIL, NIL, NIL, NIL, 104, 105},
-    /*  9 */ {105, 105, 105, 105, 105, 105, 105, 105, 104, 105},
-  };
+  Scan scanner = Scan();
+  scanner.print();
 
-  
+  while(true) {
+    Token token = scanner.scan();
+    cout << get_token_string(token.value) << ": " << token.lexeme << endl;
+    if (token.value == EOF) {
+      break;
+    }
+  }
 }
