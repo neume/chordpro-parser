@@ -1,5 +1,5 @@
 #include <iostream>
-#include "chord_group_scanner.cpp"
+#include "directive_scanner.cpp"
 using namespace std;
 string get_token_string(int value) {
   switch(value) {
@@ -13,14 +13,20 @@ string get_token_string(int value) {
     case CDELIMETER:  return "CDELIMETER";
     case QUALITY:     return "QUALITY";
     case NOTE:        return "NOTE";
+    case OBRACE:      return "OBRACE";
+    case CBRACE:      return "CBRACE";
+    case SPACE:       return "SPACE";
+    case COLON:       return "COLON";
+    case ID:          return "ID";
     case EOF:         return "EOF";
+    case OTHER:         return "OTHER";
     default:          return "DEFAULT";
   }
 }
 int main() {
-  ChordGroupScanner scanner = ChordGroupScanner();
+  DirectiveScanner scanner = DirectiveScanner();
   // scanner.print();
-  int tokens_to_scan = 1000;
+  int tokens_to_scan = 100;
   int scanned_token = 0;
   while(true and scanned_token < tokens_to_scan) {
     scanned_token++;
