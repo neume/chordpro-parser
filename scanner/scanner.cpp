@@ -67,6 +67,8 @@ public:
       case '{': return 3;
       case '}': return 4;
       case '[': return 5;
+      case 'b': return 5; // refactor should be in different state
+      case '#': return 5; //
       case ']': return 6;
       case ':': return 7;
       case EOF: return 8;
