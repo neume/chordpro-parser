@@ -1,51 +1,14 @@
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include "dfa_matrix.cpp"
-#include "token.cpp"
-#include "enums.h"
-using namespace std;
+#include "base_scanner.cpp"
 
-class ChordGroupScanner {
-  static const int NIL = -1;
-  DFAMatrix delta;
-  stringstream *in;
-  int accepting_states;
-
+class ChordGroupScanner : public BaseScanner  {
 public:
-
   ChordGroupScanner(string lexeme="") {
     delta = DFAMatrix("dfa/chord_group");
     in = new stringstream(lexeme);
     accepting_states = 200;
   }
 
-  Token scan() {
-    // cout << "debug: --------------" << endl;
-    string lexeme = "";
-    char character;
-    int state = 0;
-    bool eof = false;
-    while(true) {
-      // cout << "\tdebug: --------------" << state << endl;
-      character = (*in).get();
-      int category = get_category(character);
-      state = delta[state][category];
-      // Accepting state
-      if(state >= accepting_states) break;
-      lexeme += character;
-      // cout << character << "[" << int(character) << "]";
-
-    }
-    (*in).putback(character);
-    return get_token(state, lexeme, 0, 0);
-  }
-
-  void print() {
-    delta.print();
-  }
-
-  int get_category(char ch) {
+  int get_category(char ch) override {
     if ( 'A' <= ch && ch <= 'G') return 0;
     // there is a collition with 1 but that's ok
     if ( ch == 'b' or ch == '#')return 1;
@@ -64,7 +27,11 @@ public:
     };
     return -1;
   }
-  Token get_token(int value, string lexeme, int row, int column) {
+  void print2() {
+    cout << "world";
+  }
+
+  Token get_token(int value, string lexeme, int row, int column) override {
     switch(value) {
       case 200: return Token(NOTE, lexeme, row, column);
       case 201: return Token(QUALITY, lexeme, row, column);

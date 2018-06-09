@@ -1,5 +1,5 @@
 #include <iostream>
-#include "directive_scanner.cpp"
+#include "chord_group_scanner.cpp"
 using namespace std;
 string get_token_string(int value) {
   switch(value) {
@@ -24,18 +24,16 @@ string get_token_string(int value) {
   }
 }
 int main() {
-  DirectiveScanner scanner = DirectiveScanner("{ title: Back to me }");
-  // scanner.print();
+  BaseScanner *scanner = new ChordGroupScanner("[C#m9/Dbm7]");
   int tokens_to_scan = 100;
   int scanned_token = 0;
   while(true and scanned_token < tokens_to_scan) {
     scanned_token++;
     // cout << "scanned count: " << scanned_token << endl;
-    Token token = scanner.scan();
+    Token token = (*scanner).scan();
     cout << get_token_string(token.value) << ": " << token.lexeme << endl;
-    if (token.value == EOF or token.value == CBRACKET) {
+    if (token.value == EOF) {
       break;
     }
   }
-  // scanner.process();
 }

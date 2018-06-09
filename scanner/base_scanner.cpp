@@ -8,13 +8,12 @@ using namespace std;
 
 class BaseScanner {
 protected:
-  static const int NIL = -1;
   DFAMatrix delta;
   stringstream *in;
   int accepting_states;
 
 public:
-  
+
   Token scan() {
     // cout << "debug: --------------" << endl;
     string lexeme = "";
@@ -35,7 +34,9 @@ public:
     (*in).putback(character);
     return get_token(state, lexeme, 0, 0);
   }
-
+  void print2() {
+    cout << "hello";
+  };
   void print() {
     delta.print();
   }
