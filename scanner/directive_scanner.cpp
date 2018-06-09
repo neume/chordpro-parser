@@ -16,8 +16,8 @@ class DirectiveScanner {
 public:
 
   DirectiveScanner() {
-    delta = DFAMatrix("dfa_directive");
     in = new ifstream("directive.chordpro");
+    delta = DFAMatrix("dfa/directive");
     accepting_states = 200;
   }
 

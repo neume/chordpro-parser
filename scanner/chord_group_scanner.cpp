@@ -16,8 +16,8 @@ class ChordGroupScanner {
 public:
 
   ChordGroupScanner() {
-    delta = DFAMatrix("dfa_chord_group");
     in = new ifstream("chord_group.chordpro");
+    delta = DFAMatrix("dfa/chord_group");
     accepting_states = 200;
   }
 
