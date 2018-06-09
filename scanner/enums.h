@@ -1,6 +1,6 @@
 enum {
   LYRIC,
-  CHORD,
+  CHORDGROUP,
   DIRECTIVE,
   KEY,
   VALUE,

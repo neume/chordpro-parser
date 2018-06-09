@@ -13,7 +13,7 @@ protected:
   int accepting_states;
 
 public:
-
+  string lexeme2;
   Token scan() {
     // cout << "debug: --------------" << endl;
     string lexeme = "";

@@ -3,17 +3,29 @@
 using namespace std;
 string get_token_string(int value) {
   switch(value) {
-    case CHORD:       return "CHORD";
+    case CHORDGROUP:       return "CHORDGROUP";
     case LYRIC:       return "LYRIC";
     case NEWLINE:     return "NEWLINE";
     case DIRECTIVE:   return "DIRECTIVE";
+    case CBRACKET:    return "CBRACKET";
+    case OBRACKET:    return "OBRACKET";
+    case ADDS:        return "ADDS";
+    case CDELIMETER:  return "CDELIMETER";
+    case QUALITY:     return "QUALITY";
+    case NOTE:        return "NOTE";
+    case OBRACE:      return "OBRACE";
+    case CBRACE:      return "CBRACE";
+    case SPACE:       return "SPACE";
+    case COLON:       return "COLON";
+    case ID:          return "ID";
     case EOF:         return "EOF";
+    case OTHER:         return "OTHER";
     default:          return "DEFAULT";
   }
 }
 int main() {
   Scanner scanner = Scanner();
-  scanner.print();
+  // scanner.print();
 
   while(true) {
     Token token = scanner.scan();

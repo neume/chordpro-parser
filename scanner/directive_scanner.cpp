@@ -1,13 +1,9 @@
-#include "base_scanner.cpp"
-using namespace std;
-
 class DirectiveScanner : public BaseScanner {
 public:
   DirectiveScanner(string lexeme = ""){
-    delta = DFAMatrix("dfa/directive");
+    delta = DFAMatrix("scanner/dfa/directive");
     in = new stringstream(lexeme);
     accepting_states = 300;
-    cout << lexeme;
   }
 
   int get_category(char ch) override {
@@ -26,7 +22,7 @@ public:
     };
     return -1;
   }
-  
+
   Token get_token(int value, string lexeme, int row, int column) override {
     switch(value) {
       case 300: return Token(ID, lexeme, row, column);
