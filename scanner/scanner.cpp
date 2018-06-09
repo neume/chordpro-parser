@@ -4,8 +4,6 @@
 using namespace std;
 class Scanner : public BaseScanner{
   ifstream *in;
-  DirectiveScanner directive_scanner;
-  ChordGroupScanner chord_group_scanner;
   BaseScanner *base_scanner;
   int scanner_state;
 public:
