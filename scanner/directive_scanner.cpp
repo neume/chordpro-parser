@@ -1,51 +1,16 @@
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include "dfa_matrix.cpp"
-#include "token.cpp"
-#include "enums.h"
+#include "base_scanner.cpp"
 using namespace std;
 
-class DirectiveScanner {
-  static const int NIL = -1;
-  DFAMatrix delta;
-  stringstream *in;
-  int accepting_states;
-
+class DirectiveScanner : public BaseScanner {
 public:
-
-  DirectiveScanner(string lexeme = "") {
+  DirectiveScanner(string lexeme = ""){
     delta = DFAMatrix("dfa/directive");
     in = new stringstream(lexeme);
-    accepting_states = 200;
+    accepting_states = 300;
+    cout << lexeme;
   }
 
-  Token scan() {
-    // cout << "debug: --------------" << endl;
-    string lexeme = "";
-    char character;
-    int state = 0;
-    bool eof = false;
-    while(true) {
-      // cout << "\tdebug: --------------" << state << endl;
-      character = (*in).get();
-      int category = get_category(character);
-      state = delta[state][category];
-      // Accepting state
-      if(state >= accepting_states) break;
-      lexeme += character;
-      // cout << character << "[" << int(character) << "]";
-
-    }
-    (*in).putback(character);
-    return get_token(state, lexeme, 0, 0);
-  }
-
-  void print() {
-    delta.print();
-  }
-
-  int get_category(char ch) {
+  int get_category(char ch) override {
     if ( 'a' <= ch && ch <= 'z') return 0;
     if ( 'A' <= ch && ch <= 'Z') return 0;
     if ( '0' <= ch && ch <= '9') return 0;
@@ -61,7 +26,8 @@ public:
     };
     return -1;
   }
-  Token get_token(int value, string lexeme, int row, int column) {
+  
+  Token get_token(int value, string lexeme, int row, int column) override {
     switch(value) {
       case 300: return Token(ID, lexeme, row, column);
       case 301: return Token(COLON, lexeme, row, column);

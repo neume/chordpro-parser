@@ -1,5 +1,5 @@
 install:
-	g++ main.cpp -o a.out
+	g++ -std=c++11 main.cpp -o a.out
 	chmod +x a.out
 run:
 	./a.out
