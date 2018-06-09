@@ -7,7 +7,7 @@
 #include "enums.h"
 using namespace std;
 
-class Scan {
+class Scanner {
   static const int NIL = -1;
   DFAMatrix delta;
   ifstream *in;
@@ -15,7 +15,7 @@ class Scan {
 
 public:
 
-  Scan() {
+  Scanner() {
     delta = DFAMatrix("scanner/dfa_chordpro");
     in = new ifstream("sample.chordpro");
     accepting_states = 100;

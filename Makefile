@@ -1,5 +1,5 @@
 install:
-	g++ scanner/scan.cpp main.cpp
+	g++ main.cpp
 	# chmod +x a.op
 run:
 	./a.out

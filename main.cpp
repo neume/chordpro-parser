@@ -1,5 +1,5 @@
 #include <iostream>
-#include "scanner/scan.cpp"
+#include "scanner/scanner.cpp"
 using namespace std;
 string get_token_string(int value) {
   switch(value) {
@@ -12,7 +12,7 @@ string get_token_string(int value) {
   }
 }
 int main() {
-  Scan scanner = Scan();
+  Scanner scanner = Scanner();
   scanner.print();
 
   while(true) {
