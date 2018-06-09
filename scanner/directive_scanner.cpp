@@ -1,5 +1,4 @@
 #include <iostream>
-#include <fstream>
 #include <sstream>
 #include <vector>
 #include "dfa_matrix.cpp"
@@ -10,14 +9,14 @@ using namespace std;
 class DirectiveScanner {
   static const int NIL = -1;
   DFAMatrix delta;
-  ifstream *in;
+  stringstream *in;
   int accepting_states;
 
 public:
 
-  DirectiveScanner() {
-    in = new ifstream("directive.chordpro");
+  DirectiveScanner(string lexeme = "") {
     delta = DFAMatrix("dfa/directive");
+    in = new stringstream(lexeme);
     accepting_states = 200;
   }
 

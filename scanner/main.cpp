@@ -24,7 +24,7 @@ string get_token_string(int value) {
   }
 }
 int main() {
-  DirectiveScanner scanner = DirectiveScanner();
+  DirectiveScanner scanner = DirectiveScanner("{ title: Back to me }");
   // scanner.print();
   int tokens_to_scan = 100;
   int scanned_token = 0;
