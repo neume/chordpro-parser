@@ -73,7 +73,7 @@ public:
       case ':': return 7;
       case EOF: return 8;
       case '\n': return 9;
-      default: cout << "Something here: (" << ch << ")" << endl;
+      default: return 1;
     };
     return -1;
   }
