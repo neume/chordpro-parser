@@ -1,5 +1,5 @@
 #include <iostream>
-#include "chordpro_parser.cpp"
+#include "lib/chordpro_parser.cpp"
 using namespace std;
 int main() {
   ChordproParser parser = ChordproParser();

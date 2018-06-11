@@ -1,7 +1,7 @@
 class DirectiveScanner : public BaseScanner {
 public:
   DirectiveScanner(string lexeme = ""){
-    delta = DFAMatrix("scanner/dfa/directive");
+    delta = DFAMatrix("lib/scanner/dfa/directive");
     in = new stringstream(lexeme);
     accepting_states = 300;
   }

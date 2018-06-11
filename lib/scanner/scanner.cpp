@@ -9,7 +9,7 @@ class Scanner : public BaseScanner{
 public:
 
   Scanner() {
-    delta = DFAMatrix("scanner/dfa/chordpro");
+    delta = DFAMatrix("lib/scanner/dfa/chordpro");
     in = new ifstream("sample.chordpro");
     accepting_states = 100;
   }

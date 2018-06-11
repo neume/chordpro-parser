@@ -1,7 +1,7 @@
 class ChordGroupScanner : public BaseScanner  {
 public:
   ChordGroupScanner(string lexeme="") {
-    delta = DFAMatrix("scanner/dfa/chord_group");
+    delta = DFAMatrix("lib/scanner/dfa/chord_group");
     in = new stringstream(lexeme);
     accepting_states = 200;
     lexeme2 = lexeme;
