@@ -13,7 +13,10 @@ public:
     in = new ifstream("sample.chordpro");
     accepting_states = 100;
   }
-
+  ~Scanner() {
+    in->close();
+    delete in;
+  }
   Token scan() {
     Token token;
 
@@ -27,6 +30,7 @@ public:
       token = process();
       switch(token.value) {
         case CHORDGROUP:
+          delete base_scanner;
           base_scanner = new ChordGroupScanner(token.lexeme);
           scanner_state = 1;
           token = base_scanner->scan();

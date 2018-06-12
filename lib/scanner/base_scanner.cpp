@@ -13,6 +13,7 @@ protected:
   int accepting_states;
 
 public:
+  virtual ~BaseScanner() {}
   string lexeme2;
   Token scan() {
     // cout << "debug: --------------" << endl;

@@ -7,6 +7,9 @@ public:
     lexeme2 = lexeme;
   }
 
+  ~ChordGroupScanner() {
+    delete in;
+  }
   int get_category(char ch) override {
     if ( 'A' <= ch && ch <= 'G') return 0;
     // there is a collition with 1 but that's ok

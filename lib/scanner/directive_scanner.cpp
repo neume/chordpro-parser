@@ -6,6 +6,9 @@ public:
     accepting_states = 300;
   }
 
+  ~DirectiveScanner() {
+    delete in;
+  }
   int get_category(char ch) override {
     if ( 'a' <= ch && ch <= 'z') return 0;
     if ( 'A' <= ch && ch <= 'Z') return 0;
