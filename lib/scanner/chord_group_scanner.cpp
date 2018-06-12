@@ -1,3 +1,6 @@
+/** A sub scanner that specializes in scanning chords. Input text is expected to
+ *  be enclosed in brackets.
+ */
 class ChordGroupScanner : public BaseScanner  {
 public:
   ChordGroupScanner(string lexeme="") {
@@ -10,6 +13,11 @@ public:
   ~ChordGroupScanner() {
     delete in;
   }
+
+  /** It identifies the category of a character
+   *  @param ch is the character to be categorized
+   *  @return an int that reperesents the category -- The column in our DFA table
+   */
   int get_category(char ch) override {
     if ( 'A' <= ch && ch <= 'G') return 0;
     // there is a collition with 1 but that's ok
@@ -29,10 +37,14 @@ public:
     };
     return -1;
   }
-  void print2() {
-    cout << "world";
-  }
 
+  /** It returns a token according to its value/state
+   *  @param value is the name or identifier of the state
+   *  @param lexeme the string representation of the token
+   *  @param row is the row number of the lexeme
+   *  @param column is the column number of the lexeme
+   *  @return an int that reperesents the category -- The column in our DFA table
+   */
   Token get_token(int value, string lexeme, int row, int column) override {
     switch(value) {
       case 200: return Token(NOTE, lexeme, row, column);
