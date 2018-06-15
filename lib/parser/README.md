@@ -8,7 +8,8 @@ This is the rough design of our grammar. It will change overtime.
 ```
 song -> [directives | line ]+
 directives -> OBRACE [key_value] CBRACE
-key_value -> ID COLON ID
+key_value -> ID COLON d_value
+d_value -> [ID]+
 line -> [LYRIC | chord_group]*
 chord_group -> OBRACKET [chord]+ CBRACKET
 chord -> NOTE quality additions
