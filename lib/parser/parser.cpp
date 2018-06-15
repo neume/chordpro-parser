@@ -1,20 +1,32 @@
 class Parser {
   Scanner * scanner;
+  Token lookahead;
 public:
   Parser() {}
   Parser(Scanner *_scanner) {
     scanner = _scanner;
   }
   void parse() {
-    while(true) {
-      Token token = scanner->scan();
-      cout << get_token_string(token.value) << ": " << token.lexeme << endl;
-      if (token.value == EOF) {
-        break;
-      }
-    }
+    // while(true) {
+    //   Token token = scanner->scan();
+    //   cout << get_token_string(token.value) << ": " << token.lexeme << endl;
+    //   if (token.value == EOF) {
+    //     break;
+    //   }
+    // }
+    scan_next();
+    song();
   }
-  string get_token_string(int value) {
+
+private:
+  int value;
+  string lexeme;
+  void scan_next() {
+    lookahead = scanner->scan();
+    lexeme = lookahead.lexeme;
+    value = lookahead.value;
+  }
+  string token_string(int value) {
     switch(value) {
       case CHORDGROUP:       return "CHORDGROUP";
       case LYRIC:       return "LYRIC";
@@ -36,4 +48,46 @@ public:
       default:          return "DEFAULT";
     }
   }
+  void output_token(){
+    cout << token_string(value) << ": " << lexeme << endl;
+  }
+  void song() {
+    output_token();
+    while(value == OBRACE or value == LYRIC or value == NEWLINE) {
+      if(value == OBRACE) {
+        directive();
+      }
+      scan_next();
+    }
+  }
+  void directive() {
+    match(ID);
+    match(COLON);
+    d_value();
+    match(CBRACE);
+  }
+  void d_value(){
+    while(value == ID or value == SPACE) {
+      output_token();
+      scan_next();
+    }
+  }
+  void match(int type) {
+    if(value == type) {
+      output_token();
+      scan_next();
+    } else {
+      while(value != type) {
+        scan_next();
+        if (value == EOF)
+        {
+          cout << "EOI" << endl;
+          exit(1);
+        }
+      }
+      output_token();
+      scan_next();
+    }
+  }
+
 };
