@@ -28,7 +28,7 @@ private:
   }
   string token_string(int value) {
     switch(value) {
-      case CHORDGROUP:       return "CHORDGROUP";
+      case CHORDGROUP:  return "CHORDGROUP";
       case LYRIC:       return "LYRIC";
       case NEWLINE:     return "NEWLINE";
       case DIRECTIVE:   return "DIRECTIVE";
@@ -44,7 +44,7 @@ private:
       case COLON:       return "COLON";
       case ID:          return "ID";
       case EOF:         return "EOF";
-      case OTHER:         return "OTHER";
+      case OTHER:       return "OTHER";
       default:          return "DEFAULT";
     }
   }
@@ -53,12 +53,37 @@ private:
   }
   void song() {
     output_token();
-    while(value == OBRACE or value == LYRIC or value == NEWLINE) {
-      if(value == OBRACE) {
-        directive();
-      }
-      scan_next();
+    while(value != OBRACE or value != LYRIC or value != NEWLINE or value != OBRACKET or value != EOF) {
+
+      feed();
+       scan_next();
+      // scan_next();
     }
+  }
+  void feed(){
+    if(value == OBRACE) {
+      directive();
+      scan_next();
+    } else if ( value == OBRACKET || value == LYRIC) {
+      line();
+    }
+
+  }
+  void line() {
+    while(value == LYRIC or value == OBRACKET) {
+      line_feed();
+    }
+    if(value == NEWLINE) match(NEWLINE);
+    // scan_next();
+    // output_token();
+  }
+  void line_feed() {
+    if(value == LYRIC) {
+      output_token();
+    } else {
+      // chord_group();
+    }
+    scan_next();
   }
   void directive() {
     match(ID);
@@ -72,6 +97,7 @@ private:
       scan_next();
     }
   }
+
   void match(int type) {
     if(value == type) {
       output_token();
