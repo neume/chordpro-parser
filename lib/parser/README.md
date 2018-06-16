@@ -6,11 +6,13 @@ to monitor the grammar depth.
 ## Context Free Grammar
 This is the rough design of our grammar. It will change overtime.
 ```
-song -> [directives | line ]+
-directives -> OBRACE [key_value] CBRACE
+song -> feed+
+feed -> directive | line
+directive -> OBRACE [key_value] CBRACE
 key_value -> ID COLON d_value
 d_value -> [ID]+
-line -> [LYRIC | chord_group]*
+line -> line_feed*
+line_feed -> LYRIC | chord_group
 chord_group -> OBRACKET [chord]+ CBRACKET
 chord -> NOTE quality additions
 quality -> QUALITY | e
