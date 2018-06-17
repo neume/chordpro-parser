@@ -18,7 +18,7 @@ chord -> NOTE quality additions
 quality -> QUALITY | e
 additions -> ADDITONS | e
 ```
-### First Set
+### First Sets
 ``` ruby
 song =[OBRACE, LYRIC]
 feed = [OBRACE, LYRIC]
@@ -31,6 +31,22 @@ chord = [NOTE]
 quality = [QUALITY, e]
 additions = [ADDITIONS, e]
 ```
+These sets are necessary to synchronize the parser head to the next expected token or symbol.
+### Follow Sets
+``` ruby
+song = [EOF]
+feed = [OBRACE, LYRIC]
+directive = [OBRACE, LYRIC]
+key_value = [CBRACE]
+d_value = [CBRACE]
+line = [LYRIC, OBRACKET]
+line_feed = [LYRIC, OBRACKET]
+chord_group = [LYRIC, OBRACKET]
+chord = [CBRACKET]
+quality = [CBRACKET]
+additions = [CBRACKET]
+```
+These two sets of sets may be wrong. I find it hard to understand well the first and follow sets creation instuctions.These sets were created by observation only. I might missed a step to fully list the elements of the sets. I'll review this later.
 
 ## Output
 This analyzer will output syntax errors if any.
