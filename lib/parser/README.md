@@ -18,6 +18,19 @@ chord -> NOTE quality additions
 quality -> QUALITY | e
 additions -> ADDITONS | e
 ```
+### First Set
+``` ruby
+song =[OBRACE, LYRIC]
+feed = [OBRACE, LYRIC]
+key_value =[ID]
+d_value = [ID]
+line = [LYRIC, OBRACKET]
+line_feed = [LYRIC, OBRACKET]
+chord_group = [OBRACKET]
+chord = [NOTE]
+quality = [QUALITY, e]
+additions = [ADDITIONS, e]
+```
 
 ## Output
 This analyzer will output syntax errors if any.
