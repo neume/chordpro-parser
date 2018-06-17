@@ -4,7 +4,7 @@ We will traverse the file using recursion instead of maintaining a data structur
 to monitor the grammar depth.
 
 ## Context Free Grammar
-This is the rough design of our grammar. It will change overtime.
+This is the rough design of our grammar.  I forgot how should the grammar will end up like. This is the best iteration for now. It will change overtime.
 ```
 song -> feed+
 feed -> directive | line
@@ -20,8 +20,8 @@ additions -> ADDITONS | e
 ```
 ### First Sets
 ``` ruby
-song =[OBRACE, LYRIC]
-feed = [OBRACE, LYRIC]
+song =[OBRACE, LYRIC, OBRACKET]
+feed = [OBRACE, LYRIC, OBRACKET]
 key_value =[ID]
 d_value = [ID]
 line = [LYRIC, OBRACKET]
@@ -35,13 +35,13 @@ These sets are necessary to synchronize the parser head to the next expected tok
 ### Follow Sets
 ``` ruby
 song = [EOF]
-feed = [OBRACE, LYRIC]
-directive = [OBRACE, LYRIC]
+feed = [OBRACE, LYRIC, OBRACKET, EOF]
+directive = [OBRACE, LYRIC, OBRACKET, EOF]
 key_value = [CBRACE]
 d_value = [CBRACE]
-line = [LYRIC, OBRACKET]
-line_feed = [LYRIC, OBRACKET]
-chord_group = [LYRIC, OBRACKET]
+line = [LYRIC, OBRACKET, EOF]
+line_feed = [LYRIC, OBRACKET, EOF]
+chord_group = [LYRIC, OBRACKET, EOF]
 chord = [CBRACKET]
 quality = [CBRACKET]
 additions = [CBRACKET]
