@@ -32,6 +32,9 @@ Output:
 [Chord]:   [F#m-B]
 [Lyric]:   way(see me falling away)
 ```
+### Syntax analyzer
+Our syntax analyzer consumes a lexical analyzer object and returns a structured data. I don't know yet how will I structure the result of this analyzer. The data should be passed to a Translator or to a Code Generator. You can read more [here](lib/parser/README.md).
+
 ### Our goal
 This program should produce a yml file similar to this.
 ``` yml
