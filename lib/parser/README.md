@@ -7,44 +7,48 @@ to monitor the grammar depth.
 This is the rough design of our grammar.  I forgot how should the grammar will end up like. This is the best iteration for now. It will change overtime.
 ``` ruby
 :song -> :feed+
-:eed -> :directive | :line
-:directive -> OBRACE [:key_value] CBRACE
-:key_value -> ID COLON :d_value
-:d_value -> [ID]+
+:feed -> :directive | :line
+:directive_group -> OBRACE [:key_value] CBRACE
+:key_value -> :directive_key COLON :directive_value
+:directive_key -> ID
+:directive_value -> [ID]+
 :line -> :line_feed*
 :line_feed -> LYRIC | :chord_group
 :chord_group -> OBRACKET [:chord]+ CBRACKET
-:chord -> NOTE :quality :additions
-:quality -> QUALITY | e
-:additions -> ADDITONS | e
+:chord -> NOTE :quality_decl :additions_decl
+:quality_decl -> QUALITY | e
+:additions_decl -> ADDITONS | e
 ```
 ### First Sets
 ``` ruby
 :song =[OBRACE, LYRIC, OBRACKET]
 :feed = [OBRACE, LYRIC, OBRACKET]
+:directive_group = [OBRACE, LYRIC, OBRACKET]
 :key_value =[ID]
-:d_value = [ID]
+:directive_key = ID
+:directive_value = [ID]
 :line = [LYRIC, OBRACKET]
 :line_feed = [LYRIC, OBRACKET]
 :chord_group = [OBRACKET]
 :chord = [NOTE]
-:quality = [QUALITY, e]
-:additions = [ADDITIONS, e]
+:quality_decl = [QUALITY, e]
+:additions_decl = [ADDITIONS, e]
 ```
 These sets are necessary to synchronize the parser head to the next expected token or symbol.
 ### Follow Sets
 ``` ruby
 :song = [EOF]
 :feed = [OBRACE, LYRIC, OBRACKET, EOF]
-:directive = [OBRACE, LYRIC, OBRACKET, EOF]
+:directive_group = [OBRACE, LYRIC, OBRACKET, EOF]
 :key_value = [CBRACE]
-:d_value = [CBRACE]
+:directive_key = [COLON]
+:directive_value = [CBRACE]
 :line = [LYRIC, OBRACKET, EOF]
 :line_feed = [LYRIC, OBRACKET, EOF]
 :chord_group = [LYRIC, OBRACKET, EOF]
 :chord = [CBRACKET]
-:quality = [CBRACKET]
-:additions = [CBRACKET]
+:quality_decl = [CBRACKET]
+:additions_decl = [CBRACKET]
 ```
 These two sets of sets may be wrong. I find it hard to understand well the first and follow sets creation instuctions.These sets were created by observation only. I might missed a step to fully list the elements of the sets. I'll review this later.
 
