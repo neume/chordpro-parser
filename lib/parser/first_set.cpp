@@ -1,8 +1,5 @@
-#include <vector>
-using namespace std;
-class FirstSet {
-  vector <vector <int> > set;
-
+#include "base_set.cpp"
+class FirstSet : public BaseSet{
 public:
   FirstSet() {
     set = {
@@ -18,19 +15,5 @@ public:
       {QUALITY_DECL, EPSILON},
       {ADDITIONS_DECL, EPSILON}
     };
-  }
-  void print() {
-    for(int i = 0; i < set.size(); i++) {
-      for(int j = 0; j < set[i].size(); j++) {
-        cout << set[i][j];
-      }
-      cout << endl;
-    }
-  }
-  bool is_included(int production ,int type) {
-    for(int i = 0; i <set[production].size(); i++) {
-      if(set[production][i] == type) return true;
-    }
-    return false;
   }
 };
