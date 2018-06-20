@@ -16,5 +16,6 @@ enum {
   CDELIMETER,
   ID,
   SPACE,
-  OTHER
+  OTHER,
+  EPSILON
 };
