@@ -1,6 +1,8 @@
+#include "first_set.cpp"
 class Parser {
   Scanner * scanner;
   Token lookahead;
+  FirstSet first_set;
 public:
   Parser() {}
   Parser(Scanner *_scanner) {
@@ -9,7 +11,7 @@ public:
   void parse() {
     // while(true) {
     //   Token token = scanner->scan();
-    //   cout << get_token_string(token.value) << ": " << token.lexeme << endl;
+    //   cout << token_string(value) << ": " << lexeme << endl;
     //   if (token.value == EOF) {
     //     break;
     //   }
@@ -49,27 +51,27 @@ private:
     }
   }
   void output_token(){
-    cout << token_string(value) << ": " << lexeme << endl;
+    cout << token_string(value) << ": " << lookahead.lexeme << endl;
   }
   void song() {
+    first(SONG);
     output_token();
-    while(value != OBRACE or value != LYRIC or value != NEWLINE or value != OBRACKET or value != EOF) {
-
+    feed();
+    while(value == OBRACE or value == LYRIC or value == NEWLINE or value == OBRACKET) {
       feed();
-       scan_next();
-      // scan_next();
     }
   }
   void feed(){
-    if(value == OBRACE) {
+    first(FEED);
+    if(value == OBRACE){
       directive();
-      scan_next();
     } else if ( value == OBRACKET || value == LYRIC) {
       line();
     }
 
   }
   void line() {
+    first(LINE);
     while(value == LYRIC or value == OBRACKET) {
       line_feed();
     }
@@ -78,6 +80,8 @@ private:
     // output_token();
   }
   void line_feed() {
+    first(LINE_FEED);
+
     if(value == LYRIC) {
       output_token();
     } else {
@@ -86,12 +90,15 @@ private:
     scan_next();
   }
   void directive() {
+    first(DIRECTIVE_GROUP);
+
     match(ID);
     match(COLON);
     d_value();
     match(CBRACE);
   }
   void d_value(){
+    first(DIRECTIVE_VALUE);
     while(value == ID or value == SPACE) {
       output_token();
       scan_next();
@@ -115,5 +122,21 @@ private:
       scan_next();
     }
   }
+  void first(int production) {
+    bool found = false;
+    bool skipped = false;
+    while(!found) {
+      if(first_set.is_included(production, value)) {
+        found = true;
+        break;
+      } else {
+        skipped = true;
+        if(value == EOF) {
+          break;
+        }
+        scan_next();
+      }
 
+    }
+  }
 };
