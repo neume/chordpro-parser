@@ -64,7 +64,7 @@ private:
   void feed(){
     first(FEED);
     if(value == OBRACE){
-      directive();
+      directive_group();
     } else if ( value == OBRACKET || value == LYRIC) {
       line();
     }
@@ -89,15 +89,15 @@ private:
     }
     scan_next();
   }
-  void directive() {
+  void directive_group() {
     first(DIRECTIVE_GROUP);
 
     match(ID);
     match(COLON);
-    d_value();
+    directive_value();
     match(CBRACE);
   }
-  void d_value(){
+  void directive_value(){
     first(DIRECTIVE_VALUE);
     while(value == ID or value == SPACE) {
       output_token();
