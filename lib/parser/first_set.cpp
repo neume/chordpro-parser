@@ -1,4 +1,3 @@
-#include "base_set.cpp"
 class FirstSet : public BaseSet{
 public:
   FirstSet() {

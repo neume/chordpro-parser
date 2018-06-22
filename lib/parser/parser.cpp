@@ -1,8 +1,11 @@
+#include "base_set.cpp"
 #include "first_set.cpp"
+#include "follow_set.cpp"
 class Parser {
   Scanner * scanner;
   Token lookahead;
   FirstSet first_set;
+  FollowSet follow_set;
 public:
   Parser() {}
   Parser(Scanner *_scanner) {
@@ -123,10 +126,17 @@ private:
     }
   }
   void first(int production) {
+    find_from_set(first_set, production);
+  }
+
+  void follow(int production) {
+    find_from_set(follow_set, production);
+  }
+  void find_from_set(BaseSet &base_set, int production) {
     bool found = false;
     bool skipped = false;
     while(!found) {
-      if(first_set.is_included(production, value)) {
+      if(base_set.is_included(production, value)) {
         found = true;
         break;
       } else {

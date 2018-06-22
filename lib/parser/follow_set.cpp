@@ -1,4 +1,3 @@
-#include "base_set.cpp"
 class FollowSet : public BaseSet{
 public:
   FollowSet() {
