@@ -1,4 +1,5 @@
 #include <vector>
+#include "enums.h"
 using namespace std;
 class BaseSet {
 protected:
