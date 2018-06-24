@@ -57,32 +57,40 @@ private:
     cout << token_string(value) << ": " << lookahead.lexeme << endl;
   }
   void song() {
+    start_of("song");
     first(SONG);
     output_token();
     feed();
+    int ctr = 30;
     while(value == OBRACE or value == LYRIC or value == NEWLINE or value == OBRACKET) {
       feed();
+      if(ctr-- == 0) break;
     }
   }
   void feed(){
+    start_of("feed");
     first(FEED);
     if(value == OBRACE){
       directive_group();
     } else if ( value == OBRACKET || value == LYRIC) {
-      line();
+      // line();
     }
-
+    follow(FEED);
   }
   void line() {
+    start_of("line");
     first(LINE);
     while(value == LYRIC or value == OBRACKET) {
       line_feed();
+    follow(LINE);
+
     }
     if(value == NEWLINE) match(NEWLINE);
     // scan_next();
     // output_token();
   }
   void line_feed() {
+    start_of("line_feed");
     first(LINE_FEED);
 
     if(value == LYRIC) {
@@ -90,22 +98,41 @@ private:
     } else {
       // chord_group();
     }
-    scan_next();
+
+    follow(LINE_FEED);
   }
   void directive_group() {
+    start_of("directive_group");
     first(DIRECTIVE_GROUP);
 
-    match(ID);
+    match(OBRACE);
+    key_value();
+    match(CBRACE);
+
+    follow(DIRECTIVE_GROUP);
+
+  }
+  void key_value() {
+    start_of("key_value");
+    first(KEY_VALUE);
+    directive_key();
     match(COLON);
     directive_value();
-    match(CBRACE);
+    follow(KEY_VALUE);
   }
-  void directive_value(){
+  void directive_key() {
+    start_of("directive_key");
+    first(DIRECTIVE_KEY);
+    match(ID);
+    follow(DIRECTIVE_KEY);
+  }
+  void directive_value() {
+    start_of("directive_value");
     first(DIRECTIVE_VALUE);
-    while(value == ID or value == SPACE) {
-      output_token();
-      scan_next();
+    while(value == ID) {
+      match(ID);
     }
+    follow(DIRECTIVE_VALUE);
   }
 
   void match(int type) {
@@ -118,6 +145,7 @@ private:
         if (value == EOF)
         {
           cout << "EOI" << endl;
+          cout << "Unexpected end of input" << endl;
           exit(1);
         }
       }
@@ -126,12 +154,16 @@ private:
     }
   }
   void first(int production) {
+    start_of("first");
     find_from_set(first_set, production);
+
   }
 
   void follow(int production) {
+    start_of("follow");
     find_from_set(follow_set, production);
   }
+
   void find_from_set(BaseSet &base_set, int production) {
     bool found = false;
     bool skipped = false;
@@ -145,8 +177,13 @@ private:
           break;
         }
         scan_next();
+        cout << "======";
+        output_token();
       }
 
     }
+  }
+  void start_of(string s) {
+    cout << "Start of " << s << endl;
   }
 };
