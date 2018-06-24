@@ -2,12 +2,12 @@ class FollowSet : public BaseSet{
 public:
   FollowSet() {
     set = {
-      {EOF},
-      {OBRACE, LYRIC, OBRACKET, EOF},
-      {OBRACE, LYRIC, OBRACKET, EOF},
-      {CBRACE},
-      {COLON},
-      {CBRACE},
+      {EOF},                          // SONG
+      {OBRACE, LYRIC, OBRACKET, EOF}, // FEED
+      {OBRACE, LYRIC, OBRACKET, EOF}, // DIRECTIVE_GROUP
+      {CBRACE},                       // KEY_VALUE
+      {COLON},                        // DIRECTIVE_KEY
+      {CBRACE},                       // DIRECTIVE_VALUE
       {LYRIC, OBRACKET, EOF},
       {LYRIC, OBRACKET, EOF},
       {CBRACKET},
