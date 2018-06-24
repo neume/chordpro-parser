@@ -2,11 +2,12 @@ class FirstSet : public BaseSet{
 public:
   FirstSet() {
     set = {
-      {OBRACE, LYRIC, OBRACKET},
-      {OBRACE, LYRIC, OBRACKET},
-      {ID},
-      {ID},
-      {ID},
+      {OBRACE, LYRIC, OBRACKET},    // SONG
+      {OBRACE, LYRIC, OBRACKET},    // FEED
+      {OBRACE, LYRIC, OBRACKET},    // DIRECTIVE_GROUP
+      {ID},                         // KEY_VALUE
+      {ID},                         // DIRECTIVE_KEY
+      {ID},                         // DIRECTIVE_VALUE
       {LYRIC, OBRACKET},
       {LYRIC, OBRACKET},
       {OBRACKET},
