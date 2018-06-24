@@ -7,7 +7,7 @@ to monitor the grammar depth.
 This is the rough design of our grammar.  I forgot how should the grammar will end up like. This is the best iteration for now. It will change overtime.
 ``` ruby
 :song -> :feed+
-:feed -> :directive | :line
+:feed -> :directive_group | :line
 :directive_group -> OBRACE [:key_value] CBRACE
 :key_value -> :directive_key COLON :directive_value
 :directive_key -> ID
@@ -25,7 +25,7 @@ This is the rough design of our grammar.  I forgot how should the grammar will e
 :feed = [OBRACE, LYRIC, OBRACKET]
 :directive_group = [OBRACE, LYRIC, OBRACKET]
 :key_value =[ID]
-:directive_key = ID
+:directive_key = [ID]
 :directive_value = [ID]
 :line = [LYRIC, OBRACKET]
 :line_feed = [LYRIC, OBRACKET]
