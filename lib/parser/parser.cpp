@@ -61,7 +61,7 @@ private:
     first(SONG);
     output_token();
     feed();
-    int ctr = 30;
+    int ctr = 1;
     while(value == OBRACE or value == LYRIC or value == NEWLINE or value == OBRACKET) {
       feed();
       if(ctr-- == 0) break;
@@ -73,19 +73,21 @@ private:
     if(value == OBRACE){
       directive_group();
     } else if ( value == OBRACKET || value == LYRIC) {
-      // line();
+      line();
     }
     follow(FEED);
   }
   void line() {
     start_of("line");
     first(LINE);
+    int ctr=20;
     while(value == LYRIC or value == OBRACKET) {
       line_feed();
+      if(ctr-- == 0) break;
+    }
     follow(LINE);
 
-    }
-    if(value == NEWLINE) match(NEWLINE);
+    // if(value == NEWLINE) match(NEWLINE);
     // scan_next();
     // output_token();
   }
@@ -94,11 +96,12 @@ private:
     first(LINE_FEED);
 
     if(value == LYRIC) {
+      match(LYRIC);
       output_token();
     } else {
+      scan_next();
       // chord_group();
     }
-
     follow(LINE_FEED);
   }
   void directive_group() {
@@ -154,13 +157,13 @@ private:
     }
   }
   void first(int production) {
-    start_of("first");
+    cout << "Start of first " << production <<endl;
     find_from_set(first_set, production);
 
   }
 
   void follow(int production) {
-    start_of("follow");
+    cout << "Start of follow " << production <<endl;
     find_from_set(follow_set, production);
   }
 
@@ -176,9 +179,9 @@ private:
         if(value == EOF) {
           break;
         }
-        scan_next();
-        cout << "======";
+        cout << "Skipping ------------------";
         output_token();
+        scan_next();
       }
 
     }
