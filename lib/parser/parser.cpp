@@ -99,10 +99,16 @@ private:
       match(LYRIC);
       output_token();
     } else {
-      scan_next();
-      // chord_group();
+      chord_group();
     }
     follow(LINE_FEED);
+  }
+  void chord_group() {
+    start_of("chord_group");
+    first(CHORD_GROUP);
+    match(OBRACKET);
+    match(CBRACKET);
+    follow(CHORD_GROUP);
   }
   void directive_group() {
     start_of("directive_group");
