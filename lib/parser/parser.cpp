@@ -107,8 +107,29 @@ private:
     start_of("chord_group");
     first(CHORD_GROUP);
     match(OBRACKET);
+    chord();
     match(CBRACKET);
     follow(CHORD_GROUP);
+  }
+  void chord() {
+    start_of("chord");
+    first(CHORD);
+    match(NOTE);
+    quality_decl();
+    additions_decl();
+    follow(CHORD);
+  }
+  void quality_decl() {
+    start_of("quality_decl");
+    // first(QUALITY_DECL);
+    if(value == QUALITY) match(QUALITY);
+    // follow(QUALITY_DECL);
+  }
+  void additions_decl() {
+    start_of("additions_decl");
+    // first(ADDITIONS_DECL);
+    if(value == ADDS) match(ADDS);
+    // follow(ADDITIONS_DECL);
   }
   void directive_group() {
     start_of("directive_group");
@@ -163,13 +184,13 @@ private:
     }
   }
   void first(int production) {
-    cout << "Start of first " << production <<endl;
+    // cout << "Start of first " << production <<endl;
     find_from_set(first_set, production);
 
   }
 
   void follow(int production) {
-    cout << "Start of follow " << production <<endl;
+    // cout << "Start of follow " << production <<endl;
     find_from_set(follow_set, production);
   }
 
