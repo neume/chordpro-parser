@@ -12,13 +12,6 @@ public:
     scanner = _scanner;
   }
   void parse() {
-    // while(true) {
-    //   Token token = scanner->scan();
-    //   cout << token_string(value) << ": " << lexeme << endl;
-    //   if (token.value == EOF) {
-    //     break;
-    //   }
-    // }
     scan_next();
     song();
   }
@@ -31,6 +24,7 @@ private:
     lexeme = lookahead.lexeme;
     value = lookahead.value;
   }
+
   string token_string(int value) {
     switch(value) {
       case CHORDGROUP:  return "CHORDGROUP";
@@ -57,7 +51,6 @@ private:
     cout << token_string(value) << ": " << lookahead.lexeme << endl;
   }
   void song() {
-    start_of("song");
     first(SONG);
     output_token();
     feed();
@@ -68,7 +61,6 @@ private:
     }
   }
   void feed(){
-    start_of("feed");
     first(FEED);
     if(value == OBRACE){
       directive_group();
@@ -78,7 +70,6 @@ private:
     follow(FEED);
   }
   void line() {
-    start_of("line");
     first(LINE);
     int ctr=20;
     while(value == LYRIC or value == OBRACKET) {
@@ -92,7 +83,6 @@ private:
     // output_token();
   }
   void line_feed() {
-    start_of("line_feed");
     first(LINE_FEED);
 
     if(value == LYRIC) {
@@ -104,7 +94,6 @@ private:
     follow(LINE_FEED);
   }
   void chord_group() {
-    start_of("chord_group");
     first(CHORD_GROUP);
     match(OBRACKET);
     chord();
@@ -112,7 +101,6 @@ private:
     follow(CHORD_GROUP);
   }
   void chord() {
-    start_of("chord");
     first(CHORD);
     match(NOTE);
     quality_decl();
@@ -120,19 +108,16 @@ private:
     follow(CHORD);
   }
   void quality_decl() {
-    start_of("quality_decl");
     // first(QUALITY_DECL);
     if(value == QUALITY) match(QUALITY);
     // follow(QUALITY_DECL);
   }
   void additions_decl() {
-    start_of("additions_decl");
     // first(ADDITIONS_DECL);
     if(value == ADDS) match(ADDS);
     // follow(ADDITIONS_DECL);
   }
   void directive_group() {
-    start_of("directive_group");
     first(DIRECTIVE_GROUP);
 
     match(OBRACE);
@@ -143,7 +128,6 @@ private:
 
   }
   void key_value() {
-    start_of("key_value");
     first(KEY_VALUE);
     directive_key();
     match(COLON);
@@ -151,13 +135,11 @@ private:
     follow(KEY_VALUE);
   }
   void directive_key() {
-    start_of("directive_key");
     first(DIRECTIVE_KEY);
     match(ID);
     follow(DIRECTIVE_KEY);
   }
   void directive_value() {
-    start_of("directive_value");
     first(DIRECTIVE_VALUE);
     while(value == ID) {
       match(ID);
@@ -184,13 +166,11 @@ private:
     }
   }
   void first(int production) {
-    // cout << "Start of first " << production <<endl;
     find_from_set(first_set, production);
 
   }
 
   void follow(int production) {
-    // cout << "Start of follow " << production <<endl;
     find_from_set(follow_set, production);
   }
 
@@ -206,14 +186,11 @@ private:
         if(value == EOF) {
           break;
         }
-        cout << "Skipping ------------------";
-        output_token();
+        // cout << "Skipping ------------------";
+        // output_token();
         scan_next();
       }
 
     }
-  }
-  void start_of(string s) {
-    cout << "Start of " << s << endl;
   }
 };
